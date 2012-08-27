@@ -1,0 +1,22 @@
+---
+layout: post
+title: "web-todo"
+date: 2012-08-27 21:16
+comments: true
+categories: clojurescript
+---
+## web-todo
+
+<!-- more -->
+
+最近在練習 clojurescript 和 web app 的開發，用 html / css / clojurescript 寫了一個 todo 小程式，
+
+有興趣的可以到我的 github 上看看：[web-todo](https://github.com/reniclin/web-todo/)
+
+目前功能超級陽春，畫面也很醜，
+
+畢竟是我第一個web app （從來沒寫過 web ，只能說隔行如隔山，web 好難呀！）
+
+儲存是用 localStorage 所以可以純 client 不用 server ，用法 github 上 README有寫，
+
+目前只能在 Chrome、Opera 和 Safari 上正常運行，FireFox 和 IE 都怪怪的，有空再來修改。
