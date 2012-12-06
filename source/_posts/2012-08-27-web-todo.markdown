@@ -9,14 +9,43 @@ categories: clojurescript
 
 <!-- more -->
 
-最近在練習 clojurescript 和 web app 的開發，用 html / css / clojurescript 寫了一個 todo 小程式，
+最近在練習 ClojureScript 和 sass ，
 
-有興趣的可以到我的 github 上看看：[web-todo](https://github.com/reniclin/web-todo/)
+用 html / scss / clojurescript 寫了一個 todo 小程式，
 
-目前功能超級陽春，畫面也很醜，
+整個畫面的呈現靈感來源是 Android 上的一支 todo app [any.DO](http://www.any.do/)，
 
-畢竟是我第一個web app （從來沒寫過 web ，只能說隔行如隔山，web 好難呀！）
+有興趣的可以到 github 上抓：[web-todo](https://github.com/reniclin/web-todo/)，
 
-儲存是用 localStorage 所以可以純 client 不用 server ，用法 github 上 README有寫，
+儲存是用 localStorage 所以可以純 client 不用 server ，
 
-目前只能在 Chrome、Opera 和 Safari 上正常運行，FireFox 和 IE 都怪怪的，有空再來修改。
+用法 github 上 README 有寫，
+
+如果從來沒用過 ClojureScript 和 sass 對環境設定苦手，
+
+只想看看呈現結果的，可以直接用瀏覽器打開 samples/todo.html ，
+
+這個檔案已經包含了所有需要的 script 和 style，
+
+測試過能在 Chrome、FireFox、Opera 和 Safari 上正常運行，
+
+IE 沒測試過，不過我猜應該沒辦法跑。
+
+
+#### 開起來畫面長這樣
+{% img /images/web-todo/01_init.png %}
+
+#### 新增一些todo item
+{% img /images/web-todo/02_add_item.png %}
+
+#### 兩個 todo item 都在 Today
+{% img /images/web-todo/03_dragdrop_1.png %}
+
+#### 可以把 todo item 從 Today 拖曳到 Later
+{% img /images/web-todo/04_dragdrop_2.png %}
+
+#### 在已經完成的 todo item 上點擊可以把 todo item 設為已完成，點右邊 x 可以刪掉 item
+{% img /images/web-todo/05_delete.png %}
+
+#### 點選左上角的兩個圈圈可以切換白色/黑色兩種主題
+{% img /images/web-todo/06_dark.png %}
