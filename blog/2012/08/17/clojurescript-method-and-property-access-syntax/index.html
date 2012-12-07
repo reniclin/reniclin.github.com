@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Renic Lin</title>
+  <title>ClojureScript method call and property access syntax - Renic Lin</title>
   <meta name="author" content="Renic Lin">
 
   
-  <meta name="description" content="web-todo ">
+  <meta name="description" content="ClojureScript 呼叫物件 method 和存取物件 property 語法 ClojureScript 呼叫物件method和存取物件property的語法有點特別，做個紀錄備忘一下。 Calling a method 1
+(. js-object method) 1
+(. js- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://reniclin.github.com/">
+  <link rel="canonical" href="http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -66,58 +68,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/08/27/web-todo/">Web-todo</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-27T21:16:00+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/08/27/web-todo/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>web-todo</h2>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/08/27/web-todo/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/17/clojurescript-method-and-property-access-syntax/">ClojureScript Method Call and Property Access Syntax</a></h1>
+      <h1 class="entry-title">ClojureScript Method Call and Property Access Syntax</h1>
     
     
       <p class="meta">
@@ -135,79 +91,74 @@
 
 <time datetime="2012-08-17T21:35:00+08:00" pubdate data-updated="true">Aug 17<span>th</span>, 2012</time>
         
-         | <a href="/blog/2012/08/17/clojurescript-method-and-property-access-syntax/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>ClojureScript 呼叫物件 method 和存取物件 property 語法</h2>
+<div class="entry-content"><h2>ClojureScript 呼叫物件 method 和存取物件 property 語法</h2>
 
+<!-- more -->
+
+
+<p>ClojureScript 呼叫物件method和存取物件property的語法有點特別，做個紀錄備忘一下。</p>
+
+<h3>Calling a method</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">method</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">method</span> <span class="nv">args</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.method</span> <span class="nv">js-object</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.method</span> <span class="nv">js-object</span> <span class="nv">args</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Accessing a property</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">-property</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.-property</span> <span class="nv">js-object</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>比較需要記住的是 property 名字前面需要加一個 - 號。</h4>
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/08/17/clojurescript-method-and-property-access-syntax/">Read on &rarr;</a>
-    </footer>
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/23/clojure-noir-getting-start/">Clojure Noir Getting Start</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">Renic Lin</span></span>
 
-<time datetime="2012-07-23T21:37:00+08:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2012</time>
-        
-         | <a href="/blog/2012/07/23/clojure-noir-getting-start/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>使用leiningen建立新noir專案</h2>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/07/23/clojure-noir-getting-start/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/23/clojure-building-standalone-jar-with-leiningen/">Clojure Building Standalone Jar With Leiningen</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -219,34 +170,50 @@
   
 
 
-<time datetime="2012-07-23T21:26:00+08:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2012</time>
-        
-         | <a href="/blog/2012/07/23/clojure-building-standalone-jar-with-leiningen/#disqus_thread">Comments</a>
-        
-      </p>
+<time datetime="2012-08-17T21:35:00+08:00" pubdate data-updated="true">Aug 17<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/clojurescript/'>clojurescript</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/" data-via="" data-counturl="http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/23/clojure-noir-getting-start/" title="Previous Post: Clojure noir getting start">&laquo; Clojure noir getting start</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/08/27/web-todo/" title="Next Post: web-todo">web-todo &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
-  <div class="entry-content"><h2>使用leiningen把clojure project打包成可以獨立執行的.jar檔</h2>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/07/23/clojure-building-standalone-jar-with-leiningen/">Read on &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -287,7 +254,7 @@
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/reniclin">@reniclin</a> on GitHub
@@ -332,6 +299,7 @@
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -346,7 +314,10 @@
       var disqus_shortname = 'reniclin';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/';
+        var disqus_url = 'http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

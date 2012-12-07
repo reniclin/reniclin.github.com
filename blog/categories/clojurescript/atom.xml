@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: clojurescript | Renic Lin]]></title>
+  <link href="http://reniclin.github.com/blog/categories/clojurescript/atom.xml" rel="self"/>
+  <link href="http://reniclin.github.com/"/>
+  <updated>2012-12-07T08:42:49+08:00</updated>
+  <id>http://reniclin.github.com/</id>
+  <author>
+    <name><![CDATA[Renic Lin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[web-todo]]></title>
+    <link href="http://reniclin.github.com/blog/2012/08/27/web-todo/"/>
+    <updated>2012-08-27T21:16:00+08:00</updated>
+    <id>http://reniclin.github.com/blog/2012/08/27/web-todo</id>
+    <content type="html"><![CDATA[<h2>web-todo</h2>
+
+<!-- more -->
+
+
+<p>最近在練習 ClojureScript 和 sass ，</p>
+
+<p>用 html / scss / clojurescript 寫了一個 todo 小程式，</p>
+
+<p>整個畫面的呈現靈感來源是 Android 上的一支 todo app <a href="http://www.any.do/">any.DO</a>，</p>
+
+<p>有興趣的可以到 github 上抓：<a href="https://github.com/reniclin/web-todo/">web-todo</a>，</p>
+
+<p>儲存是用 localStorage 所以可以純 client 不用 server ，</p>
+
+<p>用法 github 上 README 有寫，</p>
+
+<p>如果從來沒用過 ClojureScript 和 sass 對環境設定苦手，</p>
+
+<p>只想看看呈現結果的，可以直接用瀏覽器打開 samples/todo.html ，</p>
+
+<p>這個檔案已經包含了所有需要的 script 和 style，</p>
+
+<p>測試過能在 Chrome、FireFox、Opera 和 Safari 上正常運行，</p>
+
+<p>IE 沒測試過，不過我猜應該沒辦法跑。</p>
+
+<h4>開起來畫面長這樣</h4>
+
+<p><img src="/images/web-todo/01_init.png"></p>
+
+<h4>新增一些todo item</h4>
+
+<p><img src="/images/web-todo/02_add_item.png"></p>
+
+<h4>兩個 todo item 都在 Today</h4>
+
+<p><img src="/images/web-todo/03_dragdrop_1.png"></p>
+
+<h4>可以把 todo item 從 Today 拖曳到 Later</h4>
+
+<p><img src="/images/web-todo/04_dragdrop_2.png"></p>
+
+<h4>在已經完成的 todo item 上點擊可以把 todo item 設為已完成，點右邊 x 可以刪掉 item</h4>
+
+<p><img src="/images/web-todo/05_delete.png"></p>
+
+<h4>點選左上角的兩個圈圈可以切換白色/黑色兩種主題</h4>
+
+<p><img src="/images/web-todo/06_dark.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ClojureScript method call and property access syntax]]></title>
+    <link href="http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/"/>
+    <updated>2012-08-17T21:35:00+08:00</updated>
+    <id>http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax</id>
+    <content type="html"><![CDATA[<h2>ClojureScript 呼叫物件 method 和存取物件 property 語法</h2>
+
+<!-- more -->
+
+
+<p>ClojureScript 呼叫物件method和存取物件property的語法有點特別，做個紀錄備忘一下。</p>
+
+<h3>Calling a method</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">method</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">method</span> <span class="nv">args</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>or</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.method</span> <span class="nv">js-object</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.method</span> <span class="nv">js-object</span> <span class="nv">args</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Accessing a property</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">-property</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>or</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.-property</span> <span class="nv">js-object</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h4>比較需要記住的是 property 名字前面需要加一個 - 號。</h4>
+]]></content>
+  </entry>
+  
+</feed>
