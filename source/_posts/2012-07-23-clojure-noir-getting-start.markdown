@@ -15,51 +15,51 @@ noir是一套很好用的clojure web frameworks，紀錄一下安裝leiningen no
 
 ### lein 1.x
 
-1. 安裝 leiningen noir plugin
+* 安裝 leiningen noir plugin
 
 {% codeblock lang:bash %}
 $ lein plugin install lein-noir 1.2.1
 {% endcodeblock %}
 
-2. 建立一個新的 noir 專案
+* 建立一個新的 noir 專案
 
 {% codeblock lang:bash %}
 $ lein noir new my-web
 {% endcodeblock %}
 
-3. cd 到剛剛建出來的資料夾
+* cd 到剛剛建出來的資料夾
 
 {% codeblock lang:bash %}
 $ cd my-web
 {% endcodeblock %}
 
-4. 試跑一下
+* 試跑一下
 
 {% codeblock lang:bash %}
 $ lein run
 {% endcodeblock %}
 
-5. 成功跑起來之後可以用瀏覽器打開 http://localhost:8080 就可以看到歡迎畫面。
+* 成功跑起來之後可以用瀏覽器打開 http://localhost:8080 就可以看到歡迎畫面。
 
 
 ### lein 2.x 的步驟比較簡單，不用先裝 plugin
 
-1. 建立一個新的 noir 專案
+* 建立一個新的 noir 專案
 
 {% codeblock lang:bash %}
 $ lein new noir my-web
 {% endcodeblock %}
 
-2. cd 到剛剛建出來的資料夾
+* cd 到剛剛建出來的資料夾
 
 {% codeblock lang:bash %}
 $ cd my-web
 {% endcodeblock %}
 
-3. 試跑一下
+* 試跑一下
 
 {% codeblock lang:bash %}
 $ lein run
 {% endcodeblock %}
 
-4. 成功跑起來之後可以用瀏覽器打開 http://localhost:8080 就可以看到歡迎畫面。
+* 成功跑起來之後可以用瀏覽器打開 http://localhost:8080 就可以看到歡迎畫面。

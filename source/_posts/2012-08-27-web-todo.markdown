@@ -49,3 +49,18 @@ IE 沒測試過，不過我猜應該沒辦法跑。
 
 #### 點選左上角的兩個圈圈可以切換白色/黑色兩種主題
 {% img /images/web-todo/06_dark.png %}
+
+
+### 相關聯結：
+
+[Clojure](http://clojure.org/)
+
+[ClojureScript](https://github.com/clojure/clojurescript)
+
+[sass](http://sass-lang.com/)
+
+[Compass](http://compass-style.org/)
+
+[fancy-buttons](https://github.com/imathis/fancy-buttons)
+
+[Animate Mixin for Compass/SASS](http://thecssguru.freeiz.com/animate/)
