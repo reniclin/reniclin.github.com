@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | Renic Lin]]></title>
   <link href="http://reniclin.github.com/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://reniclin.github.com/"/>
-  <updated>2012-12-10T11:23:44+08:00</updated>
+  <updated>2012-12-11T09:21:14+08:00</updated>
   <id>http://reniclin.github.com/</id>
   <author>
     <name><![CDATA[Renic Lin]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure Read a File as a Sequence of Lines]]></title>
+    <link href="http://reniclin.github.com/blog/2012/12/11/clojure-read-a-file-as-a-sequence-of-lines/"/>
+    <updated>2012-12-11T09:04:00+08:00</updated>
+    <id>http://reniclin.github.com/blog/2012/12/11/clojure-read-a-file-as-a-sequence-of-lines</id>
+    <content type="html"><![CDATA[<h2>Clojure把檔案逐行讀成sequence</h2>
+
+<!-- more -->
+
+
+<p>Clojure (Lisp) 常用到sequence，讀檔時也可以把檔案逐行讀成sequence：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">line-seq </span><span class="p">(</span><span class="nf">clojure.java.io/reader</span> <span class="p">(</span><span class="nf">clojure.java.io/file</span> <span class="s">&quot;file-path&quot;</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>讀出來的東西類似像這樣：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="s">&quot;line-1&quot;</span> <span class="s">&quot;line-2&quot;</span> <span class="s">&quot;line-3&quot;</span> <span class="s">&quot;line-4&quot;</span> <span class="s">&quot;line-4&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>讀成sequence之後就可以用doseq之類方便處裡sequence的macro來操作它，例如：
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">line</span> <span class="p">(</span><span class="nb">line-seq </span><span class="p">(</span><span class="nf">clojure.java.io/reader</span> <span class="p">(</span><span class="nf">clojure.java.io/file</span> <span class="s">&quot;file-path&quot;</span><span class="p">)))]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">println </span><span class="nv">line</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Clojure noir getting start]]></title>
@@ -29,79 +60,79 @@
 
 <h3>lein 1.x</h3>
 
-<ol>
+<ul>
 <li>安裝 leiningen noir plugin</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>lein plugin install lein-noir 1.2.1
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>建立一個新的 noir 專案</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>lein noir new my-web
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>cd 到剛剛建出來的資料夾</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>my-web
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>試跑一下</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>lein run
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>成功跑起來之後可以用瀏覽器打開 http://localhost:8080 就可以看到歡迎畫面。</li>
-</ol>
+</ul>
 
 
 <h3>lein 2.x 的步驟比較簡單，不用先裝 plugin</h3>
 
-<ol>
+<ul>
 <li>建立一個新的 noir 專案</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>lein new noir my-web
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>cd 到剛剛建出來的資料夾</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>my-web
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>試跑一下</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>lein run
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>成功跑起來之後可以用瀏覽器打開 http://localhost:8080 就可以看到歡迎畫面。</li>
-</ol>
+</ul>
 
 ]]></content>
   </entry>
@@ -119,9 +150,9 @@
 <p>前陣子在使用 seesaw 寫 desktop app，遇到想把所有 source code build 成單一執行檔的需求，
 使用 leiningen，可以輕鬆把你的 source 和其它的 dependencies 包成一個可單獨執行 standalone 的 jar。</p>
 
-<ol>
+<ul>
 <li>在宣告ns時要加上 (:gen-class)，例如：</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -142,9 +173,9 @@
 </span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="p">(</span><span class="ss">:gen-class</span><span class="p">))</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li>在project.clj裡加上 :main，例如：</li>
-</ol>
+</ul>
 
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -167,14 +198,14 @@
 </span><span class='line'><span class="nv">&lt;p&gt;</span>  <span class="ss">:main</span> <span class="nv">my-namespace.core</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<ol>
+<ul>
 <li><p>使用 leiningen 產生 jar</p>
 
-<p>  $ lein uberjar</p></li>
+<p>   $ lein uberjar</p></li>
 <li><p>執行</p>
 
-<p>  $ java -jar my-project-1.0.0-SNAPSHOT-standalone.jar</p></li>
-</ol>
+<p>   $ java -jar my-project-1.0.0-SNAPSHOT-standalone.jar</p></li>
+</ul>
 
 ]]></content>
   </entry>
