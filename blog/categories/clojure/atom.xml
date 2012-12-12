@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | Renic Lin]]></title>
   <link href="http://reniclin.github.com/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://reniclin.github.com/"/>
-  <updated>2012-12-12T15:28:34+08:00</updated>
+  <updated>2012-12-12T15:31:10+08:00</updated>
   <id>http://reniclin.github.com/</id>
   <author>
     <name><![CDATA[Renic Lin]]></name>
@@ -12,6 +12,121 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure proxy vs reify]]></title>
+    <link href="http://reniclin.github.com/blog/2012/12/12/clojure-proxy-vs-reify/"/>
+    <updated>2012-12-12T14:10:00+08:00</updated>
+    <id>http://reniclin.github.com/blog/2012/12/12/clojure-proxy-vs-reify</id>
+    <content type="html"><![CDATA[<h2>Clojure的proxy和reify</h2>
+
+<br />
+
+
+
+
+<!-- more -->
+
+
+<p>這個問題是在用Clojure + awt/swing開發GUI程式時遇到的，</p>
+
+<h6>（為什麼用awt/swing而不用 <a href="https://github.com/daveray/seesaw">seesaw</a> ？因為我要用到SystemTray， seesaw沒有wrapper它，加上我的程式很小。）</h6>
+
+<p>用到像是<code>JButton</code>這種元件時，常會需要用<code>addActionListener</code>method 來 add<code>ActionListener</code>。</p>
+
+<br />
+
+
+<h5>Java的寫法如下：</h5>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">myJButton</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// do something here</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<br />
+
+
+<h3>在Clojure中有兩種寫法，分別是用<code>proxy</code>和<code>reify</code>。</h3>
+
+<h3>proxy</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.addActionListener</span> <span class="nv">my-jbutton&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                <span class="p">(</span><span class="nb">proxy </span><span class="p">[</span><span class="nv">ActionListener</span><span class="p">]</span> <span class="p">[]</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nf">actionPerformed</span> <span class="p">[</span><span class="nv">evt</span><span class="p">]</span>
+</span><span class='line'>                    <span class="c1">;; (do something here)</span>
+</span><span class='line'>                    <span class="p">)))</span>
+</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>reify</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.addActionListener</span> <span class="nv">my-jbutton&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;pre&gt;&lt;code&gt;</span>                <span class="p">(</span><span class="nf">reify</span> <span class="nv">ActionListener</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nf">actionPerformed</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">evt</span><span class="p">]</span>
+</span><span class='line'>                    <span class="c1">;; (do something here)</span>
+</span><span class='line'>                    <span class="p">)))</span>
+</span><span class='line'><span class="nv">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<br />
+
+
+<h6><code>proxy</code>和<code>reify</code>一般都是用在實作interfaces，參考網路上的幾篇文章，講到平常大部份都使用時都用<code>reify</code>就好，</h6>
+
+<h6>除了一些特別的用途才用<code>proxy</code>。（ig. override base class methods）</h6>
+
+<h4>很大概的找一下資料，要再更深入研究一下<code>proxy</code>和<code>reify</code>的異同和主要用在哪些不一樣的地方。</h4>
+
+<br />
+
+
+<h3>參考</h3>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/5821892/why-should-i-use-reify-instead-of-proxy-in-clojure">Why should I use Reify instead of proxy in clojure?</a></li>
+<li><a href="http://pepijndevos.nl/how-reify-works-and-how-to-write-a-custom-typ/index.html">How reify works, and how to write a custom type</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Clojure Read a File as a Sequence of Lines]]></title>
