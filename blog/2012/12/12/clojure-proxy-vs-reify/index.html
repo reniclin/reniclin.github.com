@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>ClojureScript method call and property access syntax - Renic Lin</title>
+  <title>Clojure proxy vs reify - Renic Lin</title>
   <meta name="author" content="Renic Lin">
 
   
-  <meta name="description" content="ClojureScript 呼叫物件 method 和存取物件 property 語法 ClojureScript 呼叫物件method和存取物件property的語法有點特別，做個紀錄備忘一下。 Calling a method 1
-(. js-object method) 1
-(. js- &hellip;">
+  <meta name="description" content="Clojure的proxy和reify 這個問題是在用Clojure + awt/swing開發GUI程式時遇到的， （為什麼用awt/swing而不用 seesaw ？因為我要用到SystemTray， seesaw沒有wrapper它，加上我的程式很小。） 用到像是JButton這種元件時， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/">
+  <link rel="canonical" href="http://reniclin.github.com/blog/2012/12/12/clojure-proxy-vs-reify/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -73,7 +71,7 @@
   
   <header>
     
-      <h1 class="entry-title">ClojureScript Method Call and Property Access Syntax</h1>
+      <h1 class="entry-title">Clojure Proxy vs Reify</h1>
     
     
       <p class="meta">
@@ -89,7 +87,7 @@
   
 
 
-<time datetime="2012-08-17T21:35:00+08:00" pubdate data-updated="true">Aug 17<span>th</span>, 2012</time>
+<time datetime="2012-12-12T14:10:00+08:00" pubdate data-updated="true">Dec 12<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -98,56 +96,98 @@
   </header>
 
 
-<div class="entry-content"><h2>ClojureScript 呼叫物件 method 和存取物件 property 語法</h2>
+<div class="entry-content"><h2>Clojure的proxy和reify</h2>
+
+<br />
+
+
+
 
 <!-- more -->
 
 
-<p>ClojureScript 呼叫物件method和存取物件property的語法有點特別，做個紀錄備忘一下。</p>
+<p>這個問題是在用Clojure + awt/swing開發GUI程式時遇到的，</p>
 
-<h3>Calling a method</h3>
+<h6>（為什麼用awt/swing而不用 <a href="https://github.com/daveray/seesaw">seesaw</a> ？因為我要用到SystemTray， seesaw沒有wrapper它，加上我的程式很小。）</h6>
+
+<p>用到像是<code>JButton</code>這種元件時，常會需要用<code>addActionListener</code>method 來 add<code>ActionListener</code>。</p>
+
+<br />
+
+
+<h5>Java的寫法如下：</h5>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">method</span><span class="p">)</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">myJButton</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// do something here</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">});</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 
 
+<br />
+
+
+<h3>在Clojure中有兩種寫法，分別是用<code>proxy</code>和<code>reify</code>。</h3>
+
+<h3>proxy</h3>
+
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">method</span> <span class="nv">args</span><span class="p">)</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.addActionListener</span> <span class="nv">my-jbutton</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nb">proxy </span><span class="p">[</span><span class="nv">ActionListener</span><span class="p">]</span> <span class="p">[]</span>
+</span><span class='line'>                      <span class="p">(</span><span class="nf">actionPerformed</span> <span class="p">[</span><span class="nv">evt</span><span class="p">]</span>
+</span><span class='line'>                        <span class="c1">;; (do something here)</span>
+</span><span class='line'>                        <span class="p">)))</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>or</p>
+<h3>reify</h3>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.method</span> <span class="nv">js-object</span><span class="p">)</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.addActionListener</span> <span class="nv">my-jbutton</span>
+</span><span class='line'>                    <span class="p">(</span><span class="nf">reify</span> <span class="nv">ActionListener</span>
+</span><span class='line'>                      <span class="p">(</span><span class="nf">actionPerformed</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">evt</span><span class="p">]</span>
+</span><span class='line'>                        <span class="c1">;; (do something here)</span>
+</span><span class='line'>                        <span class="p">)))</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.method</span> <span class="nv">js-object</span> <span class="nv">args</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
+<br />
 
 
-<h3>Accessing a property</h3>
+<h6><code>proxy</code>和<code>reify</code>一般都是用在實作interfaces，參考網路上的幾篇文章，講到平常大部份都使用時都用<code>reify</code>就好，</h6>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">. </span><span class="nv">js-object</span> <span class="nv">-property</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
+<h6>除了一些特別的用途才用<code>proxy</code>。（ig. override base class methods）</h6>
 
+<h4>很大概的找一下資料，要再更深入研究一下<code>proxy</code>和<code>reify</code>的異同和主要用在哪些不一樣的地方。</h4>
 
-<p>or</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">.-property</span> <span class="nv">js-object</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
+<br />
 
 
-<h4>比較需要記住的是 property 名字前面需要加一個 - 號。</h4>
+<h3>參考</h3>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/5821892/why-should-i-use-reify-instead-of-proxy-in-clojure">Why should I use Reify instead of proxy in clojure?</a></li>
+<li><a href="http://pepijndevos.nl/how-reify-works-and-how-to-write-a-custom-typ/index.html">How reify works, and how to write a custom type</a></li>
+</ul>
+
 </div>
 
 
@@ -170,21 +210,15 @@
   
 
 
-<time datetime="2012-08-17T21:35:00+08:00" pubdate data-updated="true">Aug 17<span>th</span>, 2012</time>
+<time datetime="2012-12-12T14:10:00+08:00" pubdate data-updated="true">Dec 12<span>th</span>, 2012</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/clojurescript/'>clojurescript</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/" data-via="" data-counturl="http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://reniclin.github.com/blog/2012/12/12/clojure-proxy-vs-reify/" data-via="" data-counturl="http://reniclin.github.com/blog/2012/12/12/clojure-proxy-vs-reify/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -197,10 +231,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/07/23/clojure-noir-getting-start/" title="Previous Post: Clojure noir getting start">&laquo; Clojure noir getting start</a>
+        <a class="basic-alignment left" href="/blog/2012/12/11/clojure-read-a-file-as-a-sequence-of-lines/" title="Previous Post: Clojure Read a File as a Sequence of Lines">&laquo; Clojure Read a File as a Sequence of Lines</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/08/27/web-todo/" title="Next Post: web-todo">web-todo &raquo;</a>
       
     </p>
   </footer>
@@ -319,8 +351,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/';
-        var disqus_url = 'http://reniclin.github.com/blog/2012/08/17/clojurescript-method-and-property-access-syntax/';
+        var disqus_identifier = 'http://reniclin.github.com/blog/2012/12/12/clojure-proxy-vs-reify/';
+        var disqus_url = 'http://reniclin.github.com/blog/2012/12/12/clojure-proxy-vs-reify/';
         var disqus_script = 'embed.js';
       
     (function () {
